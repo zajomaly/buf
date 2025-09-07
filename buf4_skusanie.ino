@@ -119,6 +119,47 @@ double cieloveTeploty[LEVELS] = {130, 140, 150, 160, 170, 180, 190, 200, 210, 22
 
 MAX6675 egt(EGT_SCK, EGT_CS, EGT_SO);
 
+// ====== Rampa žhavenia podľa logov ======
+struct ZhavicRampPoint {
+  unsigned long ms;
+  float percent;
+};
+
+const ZhavicRampPoint zhavicRampTable[] = {
+  {    0, 0.0 },
+  {  4000, 3.2 },
+  { 10000, 7.2 },
+  { 20000, 13.5 },
+  { 30000, 21.6 },
+  { 40000, 23.2 },
+  { 60000, 24.7 },
+  { 80000, 25.2 },
+  {100000, 25.6 },
+  {110000, 26.0 }
+};
+const size_t zhavicRampSize = sizeof(zhavicRampTable) / sizeof(zhavicRampTable[0]);
+
+uint8_t percentToDuty(float percent) {
+  int duty = (int)round(percent * 255.0 / 100.0);
+  return (uint8_t)constrain(duty, 0, ZHAVIC_MAX_DUTY);
+}
+
+uint8_t zhavicDutyFromTime(unsigned long elapsed) {
+  if (elapsed >= zhavicRampTable[zhavicRampSize - 1].ms) {
+    return percentToDuty(zhavicRampTable[zhavicRampSize - 1].percent);
+  }
+  for (size_t i = 1; i < zhavicRampSize; ++i) {
+    if (elapsed < zhavicRampTable[i].ms) {
+      float progress = (float)(elapsed - zhavicRampTable[i - 1].ms) /
+                       (zhavicRampTable[i].ms - zhavicRampTable[i - 1].ms);
+      float pct = zhavicRampTable[i - 1].percent +
+                  progress * (zhavicRampTable[i].percent - zhavicRampTable[i - 1].percent);
+      return percentToDuty(pct);
+    }
+  }
+  return 0;
+}
+
 // ====== KONFIGURACIA MERANIA PRUDU ======
 #define ACS712_SENZITIVITA 0.066
 #define ADC_REFERENCIA 3.3
@@ -552,7 +593,7 @@ void fazaNahrievania() {
     lastFaza = aktualnaFaza;
   }
 
-  const unsigned long DOBA_PREDZHAVENIA = 30000; // 30 sekúnd
+  const unsigned long DOBA_PREDZHAVENIA = zhavicRampTable[zhavicRampSize - 1].ms; // ~110 s podľa logu
 
   if (!init) {
     cielovePWM = ventilatorPWM[urovenKurenia - 1];
@@ -573,7 +614,7 @@ void fazaNahrievania() {
 
   // === BEZPEČNÁ PREDŽHAVIACA FÁZA ===
   if (casOdStartu < DOBA_PREDZHAVENIA) {
-    zhavicPWM = map(casOdStartu, 0, DOBA_PREDZHAVENIA, 0, ZHAVIC_MAX_DUTY);
+    zhavicPWM = zhavicDutyFromTime(casOdStartu);
     ledcWrite(ZHAVIC_PWM_CH, zhavicPWM);
     digitalWrite(PWM_CERPADLO, LOW);
     ledcWrite(VENT_PWM_CH, aktualneVentPWM);
