@@ -1,0 +1,72 @@
+Zoznam úprav do projektu buf4_skusanie.ino
+==========================================
+
+A. BEZPEČNOSTNÉ A SPOĽAHLIVÉ FUNKCIE
+------------------------------------
+1. Prehriatie (>230 °C)
+   - Okamžite vypnúť žhavenie a čerpadlo.
+   - Ventilátor nechať bežať do dochladenia (čas + teplota pod bezpečnú hranicu).
+   - Po dochladení ventilátor vypnúť.
+
+2. Automatický reštart pri zhasnutí plameňa
+   - Pri strate plameňa pokus o automatický reštart (max. 3x).
+   - Po 3 neúspešných pokusoch zablokovať systém → manuálny reset.
+   - Po úspešnom štarte vynulovať počítadlo pokusov.
+
+3. Detekcia a signalizácia chýb
+   - Opakované neúspešné štarty = chyba (LED, displej, buzzer).
+   - Možnosť manuálneho odblokovania.
+
+B. UČIACI A OPTIMALIZAČNÝ SYSTÉM
+--------------------------------
+4. Adaptívne PID
+   - PID parametre (Kp, Ki, Kd) optimalizovať počas prevádzky.
+   - Auto-tune pri prvom štarte alebo pri výraznej zmene podmienok.
+
+5. SPIFFS pre učenie a štatistiky
+   - Ukladanie PID parametrov, výsledkov štartov, spotreby, časov ohrevu/chladenia.
+   - Pri ďalšom spustení načítať priemerné/najlepšie hodnoty.
+
+C. MONITORING A LOGOVANIE
+-------------------------
+6. Logovanie spotreby
+   - Počítať spotrebu nafty (pulzy čerpadla).
+   - Zaznamenávať dĺžku ohrevu a výslednú teplotu.
+
+7. Logovanie efektivity
+   - Čas ohrevu, doba chladenia, úspešnosť štartov.
+   - Možnosť exportu cez sériovú linku/displej.
+
+D. DROBNÉ ÚPRAVY
+----------------
+8. Zjednotenie funkcií a názvov
+   - Prejsť duplicity, ponechať len potrebné funkcie.
+
+9. Dokumentácia
+   - Komentovať všetky pridané funkcie a bloky.
+
+ŠPECIFICKÉ ZMENY ZO ZÁZNAMOV
+----------------------------
+- Žhavenie: PWM 8 kHz, duty cycle rampa od 0 % postupne hore podľa logov (25–27 % max).
+- Ventilátor:
+  * Nahrievanie: krátky rozbeh ~3000 rpm, prirodzený pád na cca 960 rpm, drží sa istý čas.
+  * Prechod do kúrenia: ventilátor sa doladí na cieľové otáčky podľa nastavenej úrovne.
+  * Úroveň 1 → stabilizácia okolo 1600 rpm.
+  * Úroveň 10 → stabilizácia okolo 4500 rpm.
+- Čerpadlo:
+  * Pred zapnutím kúrenia krátky predpulz (2.3 Hz, 2–3 s).
+  * Potom podľa mapy úrovní (0.9 Hz až 4.3 Hz).
+- Dochladzovanie:
+  * Po vypnutí žhavenia ventilátor ešte beží na ~3000 rpm.
+  * Vypne sa až keď teplota klesne na cca 80–90 °C.
+
+DOPLŇUJÚCE
+----------
+- Pridať čidlo teploty výfukových plynov (EGT) – MAX31855/31856, umiestnené na výfuku cca 50 cm od komory.
+  * Použije sa na lepšie riadenie spaľovania, detekciu plameňa, optimalizáciu ventilátora a pumpy, ochranu pred prehriatím.
+- Pridať čidlo NTC na komore (výpočet teploty podľa vzorca, ktorý už máme).
+  * Použije sa na riadenie dochladzovania (ventilátor OFF až pri 80–90 °C), doplnkovú ochranu pri prehriatí (>230 °C) a presnejšie riadenie fázy PREHEAT/COOL.
+- Optimalizovať spotrebu úpravou ventilátora (trim podľa EGT).
+- 10 úrovní kúrenia → každá má definované fanBase RPM, pumpBase Hz, egtTarget °C.
+- Default úroveň = naposledy použitá (uložiť do NVS/Preferences).
+

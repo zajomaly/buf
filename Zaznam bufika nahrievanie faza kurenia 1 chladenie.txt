@@ -1,0 +1,561 @@
+RUN: 0 s | Fan: 0 RPM | Pump: 0.0 Hz | Heater: OFF | C: 57
+RUN: 0 s | Fan: 0 RPM | Pump: 0.0 Hz | Heater: OFF | C: 57
+RUN: 0 s | Fan: 0 RPM | Pump: 0.1 Hz | Heater: OFF | C: 56
+RUN: 0 s | Fan: 2760 RPM | Pump: 0.0 Hz | Heater: OFF | C: 56
+RUN: 1 s | Fan: 2520 RPM | Pump: 0.0 Hz | Heater: OFF | C: 56
+RUN: 2 s | Fan: 1920 RPM | Pump: 0.0 Hz | Heater: OFF | C: 56
+RUN: 3 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: OFF | C: 56
+RUN: 4 s | Fan: 2280 RPM | Pump: 0.0 Hz | Heater: 3.2 % | C: 56
+RUN: 5 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 4.8 % | C: 56
+RUN: 6 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 5.6 % | C: 55
+RUN: 7 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 5.9 % | C: 55
+RUN: 8 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 6.4 % | C: 55
+RUN: 9 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 7.0 % | C: 54
+RUN: 10 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 7.2 % | C: 54
+RUN: 11 s | Fan: 1440 RPM | Pump: 0.0 Hz | Heater: 7.8 % | C: 54
+RUN: 12 s | Fan: 1380 RPM | Pump: 0.0 Hz | Heater: 8.0 % | C: 54
+RUN: 13 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 8.5 % | C: 53
+RUN: 14 s | Fan: 1320 RPM | Pump: 0.0 Hz | Heater: 8.9 % | C: 53
+RUN: 15 s | Fan: 1260 RPM | Pump: 0.0 Hz | Heater: 9.6 % | C: 53
+RUN: 16 s | Fan: 1140 RPM | Pump: 0.0 Hz | Heater: 10.2 % | C: 53
+RUN: 17 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 10.8 % | C: 53
+RUN: 18 s | Fan: 1320 RPM | Pump: 0.0 Hz | Heater: 11.9 % | C: 52
+RUN: 19 s | Fan: 1320 RPM | Pump: 0.0 Hz | Heater: 12.7 % | C: 52
+RUN: 20 s | Fan: 1140 RPM | Pump: 0.0 Hz | Heater: 13.5 % | C: 52
+RUN: 21 s | Fan: 1140 RPM | Pump: 0.0 Hz | Heater: 14.3 % | C: 51
+RUN: 22 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 15.6 % | C: 50
+RUN: 23 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 16.6 % | C: 50
+RUN: 24 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 17.6 % | C: 49
+RUN: 25 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 18.8 % | C: 48
+RUN: 26 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 19.5 % | C: 47
+RUN: 27 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 20.2 % | C: 47
+RUN: 28 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 20.8 % | C: 46
+RUN: 29 s | Fan: 900 RPM | Pump: 0.0 Hz | Heater: 21.4 % | C: 46
+RUN: 30 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 21.6 % | C: 45
+RUN: 31 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 22.1 % | C: 45
+RUN: 32 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 22.3 % | C: 44
+RUN: 33 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 22.4 % | C: 44
+RUN: 34 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 22.4 % | C: 43
+RUN: 35 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 22.8 % | C: 43
+RUN: 36 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 22.5 % | C: 43
+RUN: 37 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 22.6 % | C: 43
+RUN: 38 s | Fan: 900 RPM | Pump: 0.0 Hz | Heater: 22.8 % | C: 43
+RUN: 39 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 23.0 % | C: 42
+RUN: 40 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 23.2 % | C: 42
+RUN: 41 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 23.3 % | C: 42
+RUN: 42 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 23.6 % | C: 42
+RUN: 43 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 23.4 % | C: 42
+RUN: 44 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 24.0 % | C: 42
+RUN: 45 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 23.6 % | C: 42
+RUN: 46 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 23.7 % | C: 42
+RUN: 47 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 23.7 % | C: 41
+RUN: 48 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 23.9 % | C: 41
+RUN: 49 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 23.9 % | C: 41
+RUN: 50 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.0 % | C: 41
+RUN: 51 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 23.9 % | C: 41
+RUN: 52 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.0 % | C: 41
+RUN: 53 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 24.1 % | C: 41
+RUN: 54 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 24.4 % | C: 41
+RUN: 55 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.4 % | C: 41
+RUN: 56 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.2 % | C: 41
+RUN: 57 s | Fan: 900 RPM | Pump: 0.0 Hz | Heater: 24.5 % | C: 41
+RUN: 58 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.5 % | C: 41
+RUN: 59 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 24.4 % | C: 41
+RUN: 60 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 24.7 % | C: 41
+RUN: 61 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 41
+RUN: 62 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.7 % | C: 41
+RUN: 63 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 41
+RUN: 64 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 41
+RUN: 65 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 24.7 % | C: 40
+RUN: 66 s | Fan: 1140 RPM | Pump: 0.0 Hz | Heater: 24.7 % | C: 40
+RUN: 67 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 40
+RUN: 68 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 40
+RUN: 69 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 40
+RUN: 70 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 40
+RUN: 71 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 40
+RUN: 72 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 40
+RUN: 73 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.0 % | C: 40
+RUN: 74 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 40
+RUN: 75 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 40
+RUN: 76 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 40
+RUN: 77 s | Fan: 900 RPM | Pump: 0.0 Hz | Heater: 25.3 % | C: 40
+RUN: 78 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 25.1 % | C: 40
+RUN: 79 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 40
+RUN: 80 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 40
+RUN: 81 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 40
+RUN: 82 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 40
+RUN: 83 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 40
+RUN: 84 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 25.3 % | C: 40
+RUN: 85 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 40
+RUN: 86 s | Fan: 1020 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 40
+RUN: 87 s | Fan: 1140 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 40
+RUN: 88 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 40
+RUN: 89 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 40
+RUN: 90 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 40
+RUN: 91 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 40
+RUN: 92 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.4 % | C: 40
+RUN: 93 s | Fan: 1140 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 40
+RUN: 94 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 40
+RUN: 95 s | Fan: 1200 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 96 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 39
+RUN: 97 s | Fan: 900 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 39
+RUN: 98 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.5 % | C: 39
+RUN: 99 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 100 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 101 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 102 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 103 s | Fan: 960 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 104 s | Fan: 1080 RPM | Pump: 0.0 Hz | Heater: 25.7 % | C: 39
+RUN: 105 s | Fan: 1320 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 106 s | Fan: 1320 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 107 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 25.8 % | C: 39
+RUN: 108 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 109 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 39
+RUN: 110 s | Fan: 1680 RPM | Pump: 2.3 Hz | Heater: 25.9 % | C: 39
+RUN: 111 s | Fan: 1620 RPM | Pump: 2.3 Hz | Heater: 25.7 % | C: 39
+RUN: 112 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.3 % | C: 39
+RUN: 113 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 26.1 % | C: 39
+RUN: 114 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.0 % | C: 39
+RUN: 115 s | Fan: 1740 RPM | Pump: 1.2 Hz | Heater: 26.5 % | C: 39
+RUN: 116 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.6 % | C: 39
+RUN: 117 s | Fan: 1680 RPM | Pump: 1.2 Hz | Heater: 26.6 % | C: 39
+RUN: 118 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.6 % | C: 39
+RUN: 119 s | Fan: 1680 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 39
+RUN: 120 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.3 % | C: 39
+RUN: 121 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 39
+RUN: 122 s | Fan: 1740 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 39
+RUN: 123 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 39
+RUN: 124 s | Fan: 1680 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 39
+RUN: 125 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 39
+RUN: 126 s | Fan: 1740 RPM | Pump: 1.2 Hz | Heater: 26.5 % | C: 39
+RUN: 127 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 26.8 % | C: 39
+RUN: 128 s | Fan: 1740 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 39
+RUN: 129 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.6 % | C: 39
+RUN: 130 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 26.5 % | C: 39
+RUN: 131 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 26.9 % | C: 40
+RUN: 132 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 27.0 % | C: 40
+RUN: 133 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.6 % | C: 40
+RUN: 134 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.8 % | C: 40
+RUN: 135 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 27.0 % | C: 40
+RUN: 136 s | Fan: 1620 RPM | Pump: 1.2 Hz | Heater: 27.0 % | C: 40
+RUN: 137 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.4 % | C: 40
+RUN: 138 s | Fan: 1560 RPM | Pump: 1.2 Hz | Heater: 26.5 % | C: 41
+RUN: 139 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: 26.5 % | C: 41
+RUN: 140 s | Fan: 1740 RPM | Pump: 1.3 Hz | Heater: 27.1 % | C: 42
+RUN: 141 s | Fan: 1740 RPM | Pump: 1.3 Hz | Heater: 26.6 % | C: 43
+RUN: 142 s | Fan: 1800 RPM | Pump: 1.3 Hz | Heater: 26.6 % | C: 43
+RUN: 143 s | Fan: 1860 RPM | Pump: 1.4 Hz | Heater: 27.0 % | C: 43
+RUN: 144 s | Fan: 1920 RPM | Pump: 1.4 Hz | Heater: 26.8 % | C: 43
+RUN: 145 s | Fan: 1980 RPM | Pump: 1.4 Hz | Heater: 27.1 % | C: 44
+RUN: 146 s | Fan: 2040 RPM | Pump: 1.4 Hz | Heater: 27.1 % | C: 45
+RUN: 147 s | Fan: 1980 RPM | Pump: 1.5 Hz | Heater: 26.5 % | C: 45
+RUN: 148 s | Fan: 1980 RPM | Pump: 1.5 Hz | Heater: 26.4 % | C: 46
+RUN: 149 s | Fan: 2100 RPM | Pump: 1.5 Hz | Heater: 25.9 % | C: 46
+RUN: 150 s | Fan: 2220 RPM | Pump: 1.6 Hz | Heater: 25.5 % | C: 47
+RUN: 151 s | Fan: 2220 RPM | Pump: 1.6 Hz | Heater: 24.8 % | C: 47
+RUN: 152 s | Fan: 2220 RPM | Pump: 1.7 Hz | Heater: 24.6 % | C: 48
+RUN: 153 s | Fan: 2460 RPM | Pump: 1.7 Hz | Heater: 24.2 % | C: 48
+RUN: 154 s | Fan: 2280 RPM | Pump: 1.7 Hz | Heater: 24.2 % | C: 48
+RUN: 155 s | Fan: 2460 RPM | Pump: 1.8 Hz | Heater: 23.4 % | C: 49
+RUN: 156 s | Fan: 2520 RPM | Pump: 1.8 Hz | Heater: 24.0 % | C: 49
+RUN: 157 s | Fan: 2580 RPM | Pump: 1.9 Hz | Heater: 23.6 % | C: 49
+RUN: 158 s | Fan: 2460 RPM | Pump: 2.0 Hz | Heater: 23.4 % | C: 50
+RUN: 159 s | Fan: 2520 RPM | Pump: 2.0 Hz | Heater: 24.1 % | C: 50
+RUN: 160 s | Fan: 2580 RPM | Pump: 2.1 Hz | Heater: 23.9 % | C: 50
+RUN: 161 s | Fan: 2640 RPM | Pump: 2.1 Hz | Heater: 23.2 % | C: 50
+RUN: 162 s | Fan: 2760 RPM | Pump: 2.2 Hz | Heater: 23.4 % | C: 51
+RUN: 163 s | Fan: 2700 RPM | Pump: 2.3 Hz | Heater: 23.4 % | C: 51
+RUN: 164 s | Fan: 2940 RPM | Pump: 2.4 Hz | Heater: 22.4 % | C: 51
+RUN: 165 s | Fan: 2880 RPM | Pump: 2.4 Hz | Heater: 21.3 % | C: 51
+RUN: 166 s | Fan: 2820 RPM | Pump: 2.5 Hz | Heater: 19.9 % | C: 51
+RUN: 167 s | Fan: 2880 RPM | Pump: 2.5 Hz | Heater: 17.7 % | C: 52
+RUN: 168 s | Fan: 3180 RPM | Pump: 2.6 Hz | Heater: 15.6 % | C: 52
+RUN: 169 s | Fan: 3240 RPM | Pump: 2.6 Hz | Heater: 13.7 % | C: 53
+RUN: 170 s | Fan: 3180 RPM | Pump: 2.7 Hz | Heater: 11.3 % | C: 53
+RUN: 171 s | Fan: 3780 RPM | Pump: 2.7 Hz | Heater: 9.5 % | C: 54
+RUN: 172 s | Fan: 3540 RPM | Pump: 2.7 Hz | Heater: OFF | C: 55
+RUN: 173 s | Fan: 3060 RPM | Pump: 2.8 Hz | Heater: OFF | C: 56
+RUN: 174 s | Fan: 3120 RPM | Pump: 2.8 Hz | Heater: OFF | C: 56
+RUN: 175 s | Fan: 3060 RPM | Pump: 2.8 Hz | Heater: OFF | C: 57
+RUN: 176 s | Fan: 3120 RPM | Pump: 2.8 Hz | Heater: OFF | C: 58
+RUN: 177 s | Fan: 3120 RPM | Pump: 2.9 Hz | Heater: OFF | C: 58
+RUN: 178 s | Fan: 3120 RPM | Pump: 2.9 Hz | Heater: OFF | C: 59
+RUN: 179 s | Fan: 3180 RPM | Pump: 2.9 Hz | Heater: OFF | C: 60
+RUN: 180 s | Fan: 3180 RPM | Pump: 2.9 Hz | Heater: OFF | C: 60
+RUN: 181 s | Fan: 3180 RPM | Pump: 2.9 Hz | Heater: OFF | C: 60
+RUN: 182 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 61
+RUN: 183 s | Fan: 3180 RPM | Pump: 3.0 Hz | Heater: OFF | C: 61
+RUN: 184 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 61
+RUN: 185 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 62
+RUN: 186 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 62
+RUN: 187 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 62
+RUN: 188 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 62
+RUN: 189 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 63
+RUN: 190 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 63
+RUN: 191 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 63
+RUN: 192 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 63
+RUN: 193 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 63
+RUN: 194 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 64
+RUN: 195 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 64
+RUN: 196 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 64
+RUN: 197 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 64
+RUN: 198 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 64
+RUN: 199 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 65
+RUN: 200 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 65
+RUN: 201 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 65
+RUN: 202 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 65
+RUN: 203 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 65
+RUN: 204 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 65
+RUN: 205 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 66
+RUN: 206 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 66
+RUN: 207 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 66
+RUN: 208 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 66
+RUN: 209 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 66
+RUN: 210 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 66
+RUN: 211 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 66
+RUN: 212 s | Fan: 3300 RPM | Pump: 3.0 Hz | Heater: OFF | C: 67
+RUN: 213 s | Fan: 3240 RPM | Pump: 3.0 Hz | Heater: OFF | C: 67
+RUN: 214 s | Fan: 3240 RPM | Pump: 2.9 Hz | Heater: OFF | C: 68
+RUN: 215 s | Fan: 3300 RPM | Pump: 2.9 Hz | Heater: OFF | C: 69
+RUN: 216 s | Fan: 3240 RPM | Pump: 2.8 Hz | Heater: OFF | C: 71
+RUN: 217 s | Fan: 3180 RPM | Pump: 2.8 Hz | Heater: OFF | C: 72
+RUN: 218 s | Fan: 3180 RPM | Pump: 2.8 Hz | Heater: OFF | C: 73
+RUN: 219 s | Fan: 3180 RPM | Pump: 2.7 Hz | Heater: OFF | C: 72
+RUN: 220 s | Fan: 3120 RPM | Pump: 2.7 Hz | Heater: OFF | C: 73
+RUN: 221 s | Fan: 3060 RPM | Pump: 2.7 Hz | Heater: OFF | C: 74
+RUN: 222 s | Fan: 3060 RPM | Pump: 2.6 Hz | Heater: OFF | C: 75
+RUN: 223 s | Fan: 3000 RPM | Pump: 2.6 Hz | Heater: OFF | C: 76
+RUN: 224 s | Fan: 3000 RPM | Pump: 2.6 Hz | Heater: OFF | C: 76
+RUN: 225 s | Fan: 2940 RPM | Pump: 2.5 Hz | Heater: OFF | C: 77
+RUN: 226 s | Fan: 2940 RPM | Pump: 2.5 Hz | Heater: OFF | C: 78
+RUN: 227 s | Fan: 2880 RPM | Pump: 2.5 Hz | Heater: OFF | C: 78
+RUN: 228 s | Fan: 2880 RPM | Pump: 2.4 Hz | Heater: OFF | C: 79
+RUN: 229 s | Fan: 2820 RPM | Pump: 2.4 Hz | Heater: OFF | C: 79
+RUN: 230 s | Fan: 2760 RPM | Pump: 2.3 Hz | Heater: OFF | C: 80
+RUN: 231 s | Fan: 2760 RPM | Pump: 2.3 Hz | Heater: OFF | C: 80
+RUN: 232 s | Fan: 2700 RPM | Pump: 2.3 Hz | Heater: OFF | C: 81
+RUN: 233 s | Fan: 2700 RPM | Pump: 2.2 Hz | Heater: OFF | C: 81
+RUN: 234 s | Fan: 2700 RPM | Pump: 2.2 Hz | Heater: OFF | C: 81
+RUN: 235 s | Fan: 2580 RPM | Pump: 2.2 Hz | Heater: OFF | C: 82
+RUN: 236 s | Fan: 2580 RPM | Pump: 2.1 Hz | Heater: OFF | C: 83
+RUN: 237 s | Fan: 2580 RPM | Pump: 2.1 Hz | Heater: OFF | C: 83
+RUN: 238 s | Fan: 2520 RPM | Pump: 2.1 Hz | Heater: OFF | C: 84
+RUN: 239 s | Fan: 2460 RPM | Pump: 2.0 Hz | Heater: OFF | C: 84
+RUN: 240 s | Fan: 2460 RPM | Pump: 2.0 Hz | Heater: OFF | C: 85
+RUN: 241 s | Fan: 2400 RPM | Pump: 2.0 Hz | Heater: OFF | C: 86
+RUN: 242 s | Fan: 2400 RPM | Pump: 1.9 Hz | Heater: OFF | C: 87
+RUN: 243 s | Fan: 2340 RPM | Pump: 1.9 Hz | Heater: OFF | C: 87
+RUN: 244 s | Fan: 2280 RPM | Pump: 1.8 Hz | Heater: OFF | C: 88
+RUN: 245 s | Fan: 2220 RPM | Pump: 1.8 Hz | Heater: OFF | C: 89
+RUN: 246 s | Fan: 2220 RPM | Pump: 1.8 Hz | Heater: OFF | C: 90
+RUN: 247 s | Fan: 2160 RPM | Pump: 1.7 Hz | Heater: OFF | C: 91
+RUN: 248 s | Fan: 2160 RPM | Pump: 1.7 Hz | Heater: OFF | C: 92
+RUN: 249 s | Fan: 2100 RPM | Pump: 1.7 Hz | Heater: OFF | C: 93
+RUN: 250 s | Fan: 2040 RPM | Pump: 1.6 Hz | Heater: OFF | C: 94
+RUN: 251 s | Fan: 2040 RPM | Pump: 1.6 Hz | Heater: OFF | C: 95
+RUN: 252 s | Fan: 1980 RPM | Pump: 1.6 Hz | Heater: OFF | C: 95
+RUN: 253 s | Fan: 1920 RPM | Pump: 1.5 Hz | Heater: OFF | C: 96
+RUN: 254 s | Fan: 1920 RPM | Pump: 1.5 Hz | Heater: OFF | C: 97
+RUN: 255 s | Fan: 1860 RPM | Pump: 1.4 Hz | Heater: OFF | C: 98
+RUN: 256 s | Fan: 1800 RPM | Pump: 1.4 Hz | Heater: OFF | C: 97
+RUN: 257 s | Fan: 1800 RPM | Pump: 1.4 Hz | Heater: OFF | C: 98
+RUN: 258 s | Fan: 1740 RPM | Pump: 1.3 Hz | Heater: OFF | C: 99
+RUN: 259 s | Fan: 1680 RPM | Pump: 1.3 Hz | Heater: OFF | C: 99
+RUN: 260 s | Fan: 1680 RPM | Pump: 1.3 Hz | Heater: OFF | C: 100
+RUN: 261 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 101
+RUN: 262 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 102
+RUN: 263 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 103
+RUN: 264 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 104
+RUN: 265 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 105
+RUN: 266 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 106
+RUN: 267 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 107
+RUN: 268 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 108
+RUN: 269 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 109
+RUN: 270 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 110
+RUN: 271 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 110
+RUN: 272 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 111
+RUN: 273 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 112
+RUN: 274 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 112
+RUN: 275 s | Fan: 1560 RPM | Pump: 1.3 Hz | Heater: OFF | C: 113
+RUN: 276 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 114
+RUN: 277 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 115
+RUN: 278 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 113
+RUN: 279 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 114
+RUN: 280 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 115
+RUN: 281 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 116
+RUN: 282 s | Fan: 1560 RPM | Pump: 1.3 Hz | Heater: OFF | C: 117
+RUN: 283 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 117
+RUN: 284 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 118
+RUN: 285 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 119
+RUN: 286 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 119
+RUN: 287 s | Fan: 1560 RPM | Pump: 1.3 Hz | Heater: OFF | C: 120
+RUN: 288 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 121
+RUN: 289 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 121
+RUN: 290 s | Fan: 1560 RPM | Pump: 1.3 Hz | Heater: OFF | C: 122
+RUN: 291 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 122
+RUN: 292 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 123
+RUN: 293 s | Fan: 1620 RPM | Pump: 1.3 Hz | Heater: OFF | C: 123
+RUN: 294 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: OFF | C: 124
+RUN: 295 s | Fan: 1860 RPM | Pump: 0.0 Hz | Heater: OFF | C: 124
+RUN: 296 s | Fan: 2160 RPM | Pump: 0.0 Hz | Heater: OFF | C: 124
+RUN: 297 s | Fan: 2160 RPM | Pump: 0.0 Hz | Heater: OFF | C: 125
+RUN: 298 s | Fan: 3060 RPM | Pump: 0.0 Hz | Heater: 2.9 % | C: 124
+RUN: 299 s | Fan: 2580 RPM | Pump: 0.0 Hz | Heater: 3.7 % | C: 122
+RUN: 300 s | Fan: 2280 RPM | Pump: 0.0 Hz | Heater: 4.0 % | C: 120
+RUN: 301 s | Fan: 2520 RPM | Pump: 0.0 Hz | Heater: 4.8 % | C: 119
+RUN: 302 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: 5.1 % | C: 117
+RUN: 303 s | Fan: 2040 RPM | Pump: 0.0 Hz | Heater: 5.6 % | C: 116
+RUN: 304 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: 6.2 % | C: 115
+RUN: 305 s | Fan: 2040 RPM | Pump: 0.0 Hz | Heater: 6.4 % | C: 114
+RUN: 306 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 6.8 % | C: 111
+RUN: 307 s | Fan: 1920 RPM | Pump: 0.0 Hz | Heater: 7.2 % | C: 109
+RUN: 308 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: 7.7 % | C: 107
+RUN: 309 s | Fan: 1920 RPM | Pump: 0.0 Hz | Heater: 8.0 % | C: 105
+RUN: 310 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: 8.7 % | C: 104
+RUN: 311 s | Fan: 2160 RPM | Pump: 0.0 Hz | Heater: 8.8 % | C: 103
+RUN: 312 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: 9.5 % | C: 102
+RUN: 313 s | Fan: 1920 RPM | Pump: 0.0 Hz | Heater: 9.6 % | C: 101
+RUN: 314 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: 10.2 % | C: 99
+RUN: 315 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 10.5 % | C: 99
+RUN: 316 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 11.3 % | C: 98
+RUN: 317 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 11.1 % | C: 97
+RUN: 318 s | Fan: 1860 RPM | Pump: 0.0 Hz | Heater: 11.6 % | C: 96
+RUN: 319 s | Fan: 1920 RPM | Pump: 0.0 Hz | Heater: 12.0 % | C: 95
+RUN: 320 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: 12.3 % | C: 95
+RUN: 321 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 12.7 % | C: 94
+RUN: 322 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 13.3 % | C: 93
+RUN: 323 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 13.5 % | C: 92
+RUN: 324 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: 13.7 % | C: 92
+RUN: 325 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 14.4 % | C: 92
+RUN: 326 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 15.0 % | C: 91
+RUN: 327 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: 15.6 % | C: 90
+RUN: 328 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 16.5 % | C: 90
+RUN: 329 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 17.1 % | C: 89
+RUN: 330 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 17.9 % | C: 89
+RUN: 331 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 18.5 % | C: 88
+RUN: 332 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: 19.9 % | C: 88
+RUN: 333 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 20.6 % | C: 87
+RUN: 334 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 21.6 % | C: 87
+RUN: 335 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 22.0 % | C: 87
+RUN: 336 s | Fan: 1440 RPM | Pump: 0.0 Hz | Heater: 23.1 % | C: 86
+RUN: 337 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 23.7 % | C: 86
+RUN: 338 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 24.0 % | C: 86
+RUN: 339 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: 24.6 % | C: 85
+RUN: 340 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 85
+RUN: 341 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 85
+RUN: 342 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 84
+RUN: 343 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: 25.8 % | C: 84
+RUN: 344 s | Fan: 2100 RPM | Pump: 0.0 Hz | Heater: 26.2 % | C: 84
+RUN: 345 s | Fan: 2340 RPM | Pump: 0.0 Hz | Heater: 25.7 % | C: 84
+RUN: 346 s | Fan: 2580 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 84
+RUN: 347 s | Fan: 2820 RPM | Pump: 0.0 Hz | Heater: 26.0 % | C: 84
+RUN: 348 s | Fan: 3180 RPM | Pump: 0.0 Hz | Heater: 25.7 % | C: 84
+RUN: 349 s | Fan: 3300 RPM | Pump: 0.0 Hz | Heater: 26.0 % | C: 83
+RUN: 350 s | Fan: 3420 RPM | Pump: 0.0 Hz | Heater: 25.7 % | C: 83
+RUN: 351 s | Fan: 3600 RPM | Pump: 0.0 Hz | Heater: 25.7 % | C: 83
+RUN: 352 s | Fan: 3660 RPM | Pump: 0.0 Hz | Heater: 25.6 % | C: 83
+RUN: 353 s | Fan: 3600 RPM | Pump: 0.0 Hz | Heater: 25.3 % | C: 83
+RUN: 354 s | Fan: 3480 RPM | Pump: 0.0 Hz | Heater: 25.4 % | C: 83
+RUN: 355 s | Fan: 3540 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 83
+RUN: 356 s | Fan: 3660 RPM | Pump: 0.0 Hz | Heater: 25.4 % | C: 83
+RUN: 357 s | Fan: 3480 RPM | Pump: 0.0 Hz | Heater: 25.3 % | C: 83
+RUN: 358 s | Fan: 3720 RPM | Pump: 0.0 Hz | Heater: 25.4 % | C: 83
+RUN: 359 s | Fan: 3720 RPM | Pump: 0.0 Hz | Heater: 25.0 % | C: 82
+RUN: 360 s | Fan: 3660 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 82
+RUN: 361 s | Fan: 3600 RPM | Pump: 0.0 Hz | Heater: 25.2 % | C: 82
+RUN: 362 s | Fan: 3540 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 82
+RUN: 363 s | Fan: 3660 RPM | Pump: 0.0 Hz | Heater: 25.3 % | C: 82
+RUN: 364 s | Fan: 3540 RPM | Pump: 0.0 Hz | Heater: 25.0 % | C: 82
+RUN: 365 s | Fan: 3540 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 82
+RUN: 366 s | Fan: 3480 RPM | Pump: 0.0 Hz | Heater: 25.0 % | C: 82
+RUN: 367 s | Fan: 3660 RPM | Pump: 0.0 Hz | Heater: 24.8 % | C: 82
+RUN: 368 s | Fan: 3720 RPM | Pump: 0.0 Hz | Heater: 25.0 % | C: 81
+RUN: 369 s | Fan: 3720 RPM | Pump: 0.0 Hz | Heater: 24.9 % | C: 81
+RUN: 370 s | Fan: 3720 RPM | Pump: 0.0 Hz | Heater: 25.3 % | C: 81
+RUN: 371 s | Fan: 3720 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 372 s | Fan: 3600 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 373 s | Fan: 3540 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 374 s | Fan: 3420 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 375 s | Fan: 3420 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 376 s | Fan: 3420 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 377 s | Fan: 3360 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 378 s | Fan: 3300 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 379 s | Fan: 3360 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 380 s | Fan: 3300 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 381 s | Fan: 3240 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 382 s | Fan: 3240 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 383 s | Fan: 3240 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 384 s | Fan: 3180 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 385 s | Fan: 3120 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 386 s | Fan: 3120 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 387 s | Fan: 3120 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 388 s | Fan: 3060 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 389 s | Fan: 3060 RPM | Pump: 0.0 Hz | Heater: OFF | C: 85
+RUN: 390 s | Fan: 3000 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 391 s | Fan: 3000 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 392 s | Fan: 3000 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 393 s | Fan: 2940 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 394 s | Fan: 2880 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 395 s | Fan: 2880 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 396 s | Fan: 2880 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 397 s | Fan: 2820 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 398 s | Fan: 2760 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 399 s | Fan: 2820 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 400 s | Fan: 2700 RPM | Pump: 0.0 Hz | Heater: OFF | C: 84
+RUN: 401 s | Fan: 2760 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 402 s | Fan: 2700 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 403 s | Fan: 2640 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 404 s | Fan: 2640 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 405 s | Fan: 2580 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 406 s | Fan: 2580 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 407 s | Fan: 2580 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 408 s | Fan: 2520 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 409 s | Fan: 2520 RPM | Pump: 0.0 Hz | Heater: OFF | C: 83
+RUN: 410 s | Fan: 2520 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 411 s | Fan: 2460 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 412 s | Fan: 2460 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 413 s | Fan: 2460 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 414 s | Fan: 2460 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 415 s | Fan: 2400 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 416 s | Fan: 2340 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 417 s | Fan: 2400 RPM | Pump: 0.0 Hz | Heater: OFF | C: 82
+RUN: 418 s | Fan: 2340 RPM | Pump: 0.0 Hz | Heater: OFF | C: 81
+RUN: 419 s | Fan: 2340 RPM | Pump: 0.0 Hz | Heater: OFF | C: 81
+RUN: 420 s | Fan: 2280 RPM | Pump: 0.0 Hz | Heater: OFF | C: 81
+RUN: 421 s | Fan: 2340 RPM | Pump: 0.0 Hz | Heater: OFF | C: 80
+RUN: 422 s | Fan: 2280 RPM | Pump: 0.0 Hz | Heater: OFF | C: 79
+RUN: 423 s | Fan: 2220 RPM | Pump: 0.0 Hz | Heater: OFF | C: 78
+RUN: 424 s | Fan: 2280 RPM | Pump: 0.0 Hz | Heater: OFF | C: 77
+RUN: 425 s | Fan: 2220 RPM | Pump: 0.0 Hz | Heater: OFF | C: 76
+RUN: 426 s | Fan: 2160 RPM | Pump: 0.0 Hz | Heater: OFF | C: 75
+RUN: 427 s | Fan: 2220 RPM | Pump: 0.0 Hz | Heater: OFF | C: 74
+RUN: 428 s | Fan: 2160 RPM | Pump: 0.0 Hz | Heater: OFF | C: 74
+RUN: 429 s | Fan: 2160 RPM | Pump: 0.0 Hz | Heater: OFF | C: 73
+RUN: 430 s | Fan: 2100 RPM | Pump: 0.0 Hz | Heater: OFF | C: 73
+RUN: 431 s | Fan: 2160 RPM | Pump: 0.0 Hz | Heater: OFF | C: 72
+RUN: 432 s | Fan: 2040 RPM | Pump: 0.0 Hz | Heater: OFF | C: 72
+RUN: 433 s | Fan: 2100 RPM | Pump: 0.0 Hz | Heater: OFF | C: 71
+RUN: 434 s | Fan: 2100 RPM | Pump: 0.0 Hz | Heater: OFF | C: 71
+RUN: 435 s | Fan: 2040 RPM | Pump: 0.0 Hz | Heater: OFF | C: 71
+RUN: 436 s | Fan: 2040 RPM | Pump: 0.0 Hz | Heater: OFF | C: 71
+RUN: 437 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: OFF | C: 70
+RUN: 438 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: OFF | C: 70
+RUN: 439 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: OFF | C: 70
+RUN: 440 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: OFF | C: 70
+RUN: 441 s | Fan: 1980 RPM | Pump: 0.0 Hz | Heater: OFF | C: 69
+RUN: 442 s | Fan: 1920 RPM | Pump: 0.0 Hz | Heater: OFF | C: 69
+RUN: 443 s | Fan: 1920 RPM | Pump: 0.0 Hz | Heater: OFF | C: 69
+RUN: 444 s | Fan: 1860 RPM | Pump: 0.0 Hz | Heater: OFF | C: 69
+RUN: 445 s | Fan: 1860 RPM | Pump: 0.0 Hz | Heater: OFF | C: 69
+RUN: 446 s | Fan: 1860 RPM | Pump: 0.0 Hz | Heater: OFF | C: 69
+RUN: 447 s | Fan: 1860 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 448 s | Fan: 1860 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 449 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 450 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 451 s | Fan: 1740 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 452 s | Fan: 1800 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 453 s | Fan: 1740 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 454 s | Fan: 1740 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 455 s | Fan: 1740 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 456 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 457 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: OFF | C: 68
+RUN: 458 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 459 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 460 s | Fan: 1680 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 461 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 462 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 463 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 464 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 465 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 466 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 467 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 468 s | Fan: 1620 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 469 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 470 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 471 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 67
+RUN: 472 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 473 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 474 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 475 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 476 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 477 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 478 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 479 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 480 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 481 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 482 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 483 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 484 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 485 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 486 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 487 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 488 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 489 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 490 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 491 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 492 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 493 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 494 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 66
+RUN: 495 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 496 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 497 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 498 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 499 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 500 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 501 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 502 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 503 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 504 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 505 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 506 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 507 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 508 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 509 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 510 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 511 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 512 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 513 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 514 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 65
+RUN: 515 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 516 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 517 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 518 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 519 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 520 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 521 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 522 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 523 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 524 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 525 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 526 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 527 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 528 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 529 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 530 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 64
+RUN: 531 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 532 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 533 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 534 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 535 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 536 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 537 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 538 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 539 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 540 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 541 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 542 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 543 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 544 s | Fan: 1500 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 545 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 63
+RUN: 546 s | Fan: 1560 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 547 s | Fan: 1440 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 548 s | Fan: 1260 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 549 s | Fan: 900 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 550 s | Fan: 660 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 551 s | Fan: 420 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 552 s | Fan: 180 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 553 s | Fan: 60 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 0 s | Fan: 0 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 0 s | Fan: 0 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 0 s | Fan: 0 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
+RUN: 0 s | Fan: 0 RPM | Pump: 0.0 Hz | Heater: OFF | C: 62
