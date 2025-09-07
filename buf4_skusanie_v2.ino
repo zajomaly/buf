@@ -1,5 +1,3 @@
-struct PlynulyPrechod;  // forward declaration for Arduino's auto-generated prototypes
-
 #include <Wire.h>
 #include <TFT_eSPI.h>
 #include <Adafruit_BME280.h>
@@ -15,6 +13,20 @@ using namespace fs;
 #include "max6675.h"
 #include <math.h>
 
+//
+// Plynulý prechod pomocou štruktúry, ktorú musíme deklarovať ešte predtým,
+// ako Arduino preprocesor vygeneruje prototypy funkcií. Inak by sa typ
+// nepodarilo nájsť pri automatickej deklarácii.
+//
+struct PlynulyPrechod {
+  unsigned long casZaciatku;
+  int startHodnota;
+  int cielovaHodnota;
+  bool aktivny;
+};
+
+int vypocitajPlynuluHodnotu(const PlynulyPrechod &prechod);
+
 
 float merajPrud();
 void emergencyShutdown();
@@ -29,6 +41,7 @@ void emergencyShutdown();
 #define MAX_RESTART_POKUSY 3           // A2: max. auto-reštarty pri zhasnutí plameňa
 #define PLAMEN_TIMEOUT_MS 5000UL       // A2: timeout pre vyhodnotenie zhasnutia plameňa
 #define SPOTREBA_NA_PULZ 0.000025
+#define EMERGENCY_SHUTDOWN_TEMP 230.0
 #define PID_KP 1.0   // alebo aj 0.7
 #define PID_KI 0.1   // veľmi opatrne s I
 #define PID_KD 2.0   // ak chceš tlmenie (alebo 0.5)
@@ -178,13 +191,6 @@ const unsigned long DOBA_PRECHAZU = 5000; // 5 sekúnd pre plynulý prechod
 int cieloveVentPWM = 0;               // Cieľové PWM pre ventilátor
 int startVentPWM = 0;                 // Počiatočné PWM na začiatku prechodu
 // Plynulé prechody
-struct PlynulyPrechod {
-  unsigned long casZaciatku;
-  int startHodnota;
-  int cielovaHodnota;
-  bool aktivny;
-};
-
 PlynulyPrechod prechodVentilator = {0, 0, 0, false};
 PlynulyPrechod prechodCerpadlo = {0, 0, 0, false};
 
@@ -953,6 +959,9 @@ void fazaChladenia() {
     kurenieAktivne = false;
     chladenieZacalo = 0;
     Serial.println("✅ Bufík dochladený, ventilátor OFF.");
+    int lastIdx = currentSpotrebaIndex;
+    saveSpotrebaStats();
+    logCycleStats(spotrebaHistory[lastIdx]);
   }
 }
 
@@ -1204,7 +1213,7 @@ void regulatePump() {
     return;
   }
 
-  int interval = map((long)tBufik, (long)TEPLOTA_RYCHLE_START, (long)TEPLOTA_MAX, 300, 3000);
+  int interval = map(tBufik, TEPLOTA_RYCHLE_START, EMERGENCY_SHUTDOWN_TEMP, 300, 3000);
   interval = constrain(interval, 300, 3000);
 
   if (millis() - lastPumpPulse > interval) {
@@ -1422,15 +1431,26 @@ void updateSpotrebaStats() {
 }
 
 void saveSpotrebaStats() {
-  spotrebaHistory[currentSpotrebaIndex].duration = (millis() - procesStart) / 1000;
-  spotrebaHistory[currentSpotrebaIndex].spotreba = totalSpotreba;
+  // uloženie štatistík aktuálneho cyklu
+  spotrebaHistory[currentSpotrebaIndex].startTime       = procesStart;
+  spotrebaHistory[currentSpotrebaIndex].duration        = (millis() - procesStart) / 1000;
+  spotrebaHistory[currentSpotrebaIndex].spotreba        = totalSpotreba;
   spotrebaHistory[currentSpotrebaIndex].priemernaTeplota = runningAvgTemp;
-  spotrebaHistory[currentSpotrebaIndex].pulzy = totalPulzy;
+  spotrebaHistory[currentSpotrebaIndex].pulzy           = totalPulzy;
+
   currentSpotrebaIndex = (currentSpotrebaIndex + 1) % 3;
   totalPulzy = 0;
   totalSpotreba = 0;
   runningAvgTemp = 0;
   tempSamples = 0;
+}
+
+// výpis štatistík cyklu cez sériovú linku
+void logCycleStats(const SpotrebaData &d) {
+  Serial.println("\xF0\x9F\x93\x8A Štatistiky cyklu:");
+  Serial.printf("\xE2\x8F\xB1 Trvanie: %lus\n", d.duration);
+  Serial.printf("\xF0\x9F\x94\xA5 Priemerná teplota: %.1f °C\n", d.priemernaTeplota);
+  Serial.printf("\xE2\x9B\xBD Spotreba: %.3f L (%d pulzov)\n", d.spotreba, d.pulzy);
 }
 
 
@@ -1944,6 +1964,11 @@ void handleUI() {
             aktualnaFaza = FAZA_NAHRIEVANIE;
             casZaciatkuFazy = millis();
             kurenieAktivne = true;
+            procesStart = millis();
+            totalPulzy = 0;
+            totalSpotreba = 0;
+            runningAvgTemp = 0;
+            tempSamples = 0;
             currentPage = PAGE_INDEX;
             drawIndexScreen();
           } else {
@@ -2266,7 +2291,7 @@ void loop()  {
     posledneKurenieAktivne = kurenieAktivne;
   }
 
-  if (tBufik >= TEPLOTA_MAX) {
+  if (tBufik >= EMERGENCY_SHUTDOWN_TEMP) {
     emergencyShutdown();
   }
 
