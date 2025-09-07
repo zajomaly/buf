@@ -13,6 +13,20 @@ using namespace fs;
 #include "max6675.h"
 #include <math.h>
 
+//
+// Plynulý prechod pomocou štruktúry, ktorú musíme deklarovať ešte predtým,
+// ako Arduino preprocesor vygeneruje prototypy funkcií. Inak by sa typ
+// nepodarilo nájsť pri automatickej deklarácii.
+//
+struct PlynulyPrechod {
+  unsigned long casZaciatku;
+  int startHodnota;
+  int cielovaHodnota;
+  bool aktivny;
+};
+
+int vypocitajPlynuluHodnotu(const PlynulyPrechod &prechod);
+
 
 float merajPrud();
 void emergencyShutdown();
@@ -177,19 +191,12 @@ const unsigned long DOBA_PRECHAZU = 5000; // 5 sekúnd pre plynulý prechod
 int cieloveVentPWM = 0;               // Cieľové PWM pre ventilátor
 int startVentPWM = 0;                 // Počiatočné PWM na začiatku prechodu
 // Plynulé prechody
-struct PlynulyPrechod {
-  unsigned long casZaciatku;
-  int startHodnota;
-  int cielovaHodnota;
-  bool aktivny;
-};
-
 PlynulyPrechod prechodVentilator = {0, 0, 0, false};
 PlynulyPrechod prechodCerpadlo = {0, 0, 0, false};
 
 
 
-int vypocitajPlynuluHodnotu(PlynulyPrechod prechod) {
+int vypocitajPlynuluHodnotu(const PlynulyPrechod &prechod) {
   if (!prechod.aktivny) return prechod.cielovaHodnota;
 
   unsigned long elapsed = millis() - prechod.casZaciatku;
