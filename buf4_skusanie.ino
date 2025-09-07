@@ -11,6 +11,7 @@
 #include <driver/ledc.h>
 using namespace fs;
 #include "max6675.h"
+#include <math.h>
 
 
 float merajPrud();
@@ -19,32 +20,21 @@ void emergencyShutdown();
 // ====== KONSTANTY ======
 #define LEVELS 10
 #define MIN_VENT_OTACKY 100
-//#define ZHAVENIE_CAS 30000
-//#define CERPADLO_START_CAS 15000
-//#define CERPADLO_PULZ 20
 #define TEPLOTA_RYCHLE_START 60.0
-//#define TEPLOTA_NASTUP_NAHRIVANIE 70.0
-//#define TEPLOTA_VYPNOUT_CHLADENIE 50.0
-#define TEPLOTA_MAX 230.0
-//#define VENTILATOR_VYPNUTY_CAS 30000
-//#define VENT_CISTENIE 128
-//#define CHLADENIE_CAS 30000
-//#define KONTROLA_SENZOROV_CAS 60000
+#define TEPLOTA_MAX 230.0              // A1: hranica prehriatia komory
+#define TEPLOTA_BEZPECNA 180.0         // A1: hranica bezpečnej teploty pri dochladzovaní
+#define DOCHLADENIE_MS   60000UL       // A1: minimálny čas dochladenia ventilátorom (1 min)
+#define MAX_RESTART_POKUSY 3           // A2: max. auto-reštarty pri zhasnutí plameňa
+#define PLAMEN_TIMEOUT_MS 5000UL       // A2: timeout pre vyhodnotenie zhasnutia plameňa
 #define SPOTREBA_NA_PULZ 0.000025
-//#define REFERENCNA_TEPLOTA 20.0
-//#define KOEF_TEPLOTA 0.05
-//#define WDT_TIMEOUT 10
 #define EMERGENCY_SHUTDOWN_TEMP 230.0
 #define PID_KP 1.0   // alebo aj 0.7
 #define PID_KI 0.1   // veľmi opatrne s I
 #define PID_KD 2.0   // ak chceš tlmenie (alebo 0.5)
-#define TEPLOTA_MAX 230.0              // A1: hranica prehriatia komory
-#define TEPLOTA_BEZPECNA 180.0             // A1: hranica bezpečnej teploty pri dochladzovaní
-#define DOCHLADENIE_MS   60000UL    // A1: minimálny čas dochladenia ventilátorom (1 min)
-#define MAX_RESTART_POKUSY 3           // A2: max. auto-reštarty pri zhasnutí plameňa
-#define PLAMEN_TIMEOUT_MS 5000UL       // A2: timeout pre vyhodnotenie zhasnutia plameňa
-#define SPOTREBA_NA_PULZ 0.000025
-//#define EMERGENCY_SHUTDOWN_TEMP 230.0
+#define EGT_MAX 900.0                 // maximálna teplota výfukových plynov
+
+#define LOCKOUT_LED 4
+#define LOCKOUT_BUZZER 26
 
 #define R1    46900.0     // Tvoj delič – odpor na +3.3V
 #define R0    50000.0     // NTC odpor pri 25°C
@@ -93,10 +83,10 @@ double pidVentInput, pidVentOutput, pidVentSetpoint;
 PID pidVent(&pidVentInput, &pidVentOutput, &pidVentSetpoint, PID_KP, PID_KI, PID_KD, DIRECT);
 
 // Výstupné hodnoty PWM pre ventilátor podľa úrovne (zodpovedajú cca 25–100 % výkonu)
-int ventilatorPWM[10] = {64, 84, 105, 127, 148, 168, 189, 211, 232, 255};
+int ventilatorPWM[LEVELS] = {64, 84, 105, 127, 148, 168, 189, 211, 232, 255};
 
 // Cieľové teploty pre jednotlivé úrovne kúrenia (v stupňoch Celzia)
-double cieloveTeploty[10] = { 130, 140, 150, 160, 170, 180, 190, 200, 210 };
+double cieloveTeploty[LEVELS] = {130, 140, 150, 160, 170, 180, 190, 200, 210, 220};
 
 
 
@@ -115,18 +105,19 @@ double cieloveTeploty[10] = { 130, 140, 150, 160, 170, 180, 190, 200, 210 };
 #define PWM_CERPADLO      2
 #define PWM_VENTILATOR   27
 #define VENT_PWM_CH       0
+#define ZHAVIC_PWM_CH     2
+#define ZHAVIC_MAX_DUTY  69  // ~27% duty cycle
 #define ACS712_PIN       33
 #define BTN_UP            0  // používateľské tlačidlo
 #define BTN_OK           35  // boot tlačidlo
 #define PIN_NTC          32
 #define SDA_BME          22
 #define SCL_BME          21
+#define EGT_SO           19
+#define EGT_CS            5
+#define EGT_SCK          18
 
-int soPin = 12;    // SO (DO)
-int csPin = 13;    // CS
-int sckPin = 17;   // SCK (CLK)
-
-MAX6675 thermocouple(sckPin, csPin, soPin);
+MAX6675 egt(EGT_SCK, EGT_CS, EGT_SO);
 
 // ====== KONFIGURACIA MERANIA PRUDU ======
 #define ACS712_SENZITIVITA 0.066
@@ -253,11 +244,12 @@ float teplotaCielStart = 60.0;
 float teplotaCielUdrzanie = 90.0;
 
 int indexSelect = 0, menuSelect = 0, levelSelect = 0;
-int curLevel = 0, ventLevels[LEVELS] = {100, 150, 200, 230, 255};
-int pumpLevels[LEVELS] = {800, 600, 400, 300, 200};
+int curLevel = 0, ventLevels[LEVELS] = {80, 100, 120, 140, 160, 180, 200, 220, 240, 255};
+int pumpLevels[LEVELS] = {800, 700, 600, 500, 400, 300, 250, 200, 150, 100};
 int startLevel = 0;
 
-float tAHT = NAN, hAHT = NAN, tBufik = NAN, tNTC = NAN;
+float tAHT = NAN, hAHT = NAN, tBufik = NAN;
+double tEGT = NAN;
 
 float predpovedMinTeplota = 8.0;    // Očakávaná minimálna teplota (noc)
 float predpovedMaxTeplota = 16.0;   // Očakávaná maximálna teplota (deň)
@@ -388,6 +380,29 @@ void nacitajLogyZoSPIFFS() {
   Serial.printf("📄 Načítaných %d záznamov zo SPIFFS\n", zaznamy.size());
 }
 
+void loadPIDParams() {
+  File f = SPIFFS.open("/pid.cfg", FILE_READ);
+  if (f) {
+    double kp = f.parseFloat();
+    double ki = f.parseFloat();
+    double kd = f.parseFloat();
+    if (kp > 0 && ki >= 0 && kd >= 0) {
+      pid.SetTunings(kp, ki, kd);
+      pidVent.SetTunings(kp, ki, kd);
+      Serial.printf("PID params loaded: Kp=%.3f Ki=%.3f Kd=%.3f\n", kp, ki, kd);
+    }
+    f.close();
+  }
+}
+
+void savePIDParams() {
+  File f = SPIFFS.open("/pid.cfg", FILE_WRITE);
+  if (f) {
+    f.printf("%f %f %f", pid.GetKp(), pid.GetKi(), pid.GetKd());
+    f.close();
+  }
+}
+
 
 
 // ================================================================================================================ Proces kurenia ===================================================
@@ -419,7 +434,20 @@ void kontrolaVentilatora() {
   Serial.println("✅ Ventilátor OK, nastavujem späť na nízke otáčky (PWM 64)");
 }
 float citajNTCTeplotu(int pin) {
-  return thermocouple.readCelsius();
+  int raw = analogRead(pin);
+  float vout = raw * (ADC_REFERENCIA / ADC_ROZLISENIE);
+  if (vout <= 0.0 || vout >= ADC_REFERENCIA) return NAN;
+  float rntc = (R1 * vout) / (ADC_REFERENCIA - vout);
+  float tempK = 1.0 / ((1.0 / T0) + (1.0 / BETA) * log(rntc / R0));
+  return tempK - 273.15;
+}
+
+double citajEGT() {
+  double t = egt.readCelsius();
+  if (isnan(t)) {
+    Serial.println("Chyba čítania EGT");
+  }
+  return t;
 }
 
 
@@ -464,8 +492,7 @@ void kontrolaCerpadla() {
 // =============================================================================================================== Kontrola žhavenia  ==============================================
 void kontrolaZhavenia() {
   Serial.println("🧪 [Kontrola žhavenia] Zapínam žhavenie...");
-
-  digitalWrite(PWM_ZHAVENIE, HIGH); // ak máš aktívne HIGH
+  ledcWrite(ZHAVIC_PWM_CH, 255); // plný výkon pre test
   delay(1000);
 
   float prud = merajPrud();
@@ -481,13 +508,13 @@ void kontrolaZhavenia() {
 
     chybaSystemu = true;
     popisChyby = "Chyba žhavenia! Nízky prúd";
-    digitalWrite(PWM_ZHAVENIE, LOW);
+    ledcWrite(ZHAVIC_PWM_CH, 0);
     delay(30);
     return;
   }
 
   Serial.println("✅ Žhavenie OK – vypínam");
-  digitalWrite(PWM_ZHAVENIE, LOW);
+  ledcWrite(ZHAVIC_PWM_CH, 0);
 }
 
 
@@ -505,6 +532,7 @@ void fazaNahrievania() {
   static unsigned long casPotvrdeniaPlamena = 0;
   static bool predpulzHotovy = false;
   static unsigned long casPredpulzu = 0;
+  static int zhavicPWM = 0;
 
   // ---- Reset premenných pri vstupe do fázy ----
   static int lastFaza = -1;
@@ -520,6 +548,7 @@ void fazaNahrievania() {
     casPotvrdeniaPlamena = 0;
     predpulzHotovy = false;
     casPredpulzu = 0;
+    zhavicPWM = 0;
     lastFaza = aktualnaFaza;
   }
 
@@ -534,7 +563,8 @@ void fazaNahrievania() {
     casPotvrdeniaPlamena = 0;
     predpulzHotovy = false;
     casPredpulzu = 0;
-    digitalWrite(PWM_ZHAVENIE, HIGH);
+    zhavicPWM = 0;
+    ledcWrite(ZHAVIC_PWM_CH, 0);
     Serial.println("▶️ Štart nahrievania: rozbeh ventilátora + žhavenie.");
     init = true;
   }
@@ -543,7 +573,8 @@ void fazaNahrievania() {
 
   // === BEZPEČNÁ PREDŽHAVIACA FÁZA ===
   if (casOdStartu < DOBA_PREDZHAVENIA) {
-    digitalWrite(PWM_ZHAVENIE, HIGH);
+    zhavicPWM = map(casOdStartu, 0, DOBA_PREDZHAVENIA, 0, ZHAVIC_MAX_DUTY);
+    ledcWrite(ZHAVIC_PWM_CH, zhavicPWM);
     digitalWrite(PWM_CERPADLO, LOW);
     ledcWrite(VENT_PWM_CH, aktualneVentPWM);
 
@@ -558,6 +589,7 @@ void fazaNahrievania() {
 
   // === PREDPULZ ČERPADLA (2–3 s na 2,3 Hz) ===
   if (!predpulzHotovy) {
+    ledcWrite(ZHAVIC_PWM_CH, ZHAVIC_MAX_DUTY);
     if (casPredpulzu == 0) casPredpulzu = millis();
     if (millis() - casPredpulzu < 3000) {
       if (millis() - lastPump > 435) { // 2.3 Hz ≈ 435 ms interval
@@ -597,7 +629,7 @@ void fazaNahrievania() {
   if (!plamenPotvrdeny && tBufik > TEPLOTA_RYCHLE_START) {
     plamenPotvrdeny = true;
     casPotvrdeniaPlamena = millis();
-    digitalWrite(PWM_ZHAVENIE, LOW);
+    ledcWrite(ZHAVIC_PWM_CH, 0);
     delay(30);
     Serial.println("🔥 Plameň potvrdený! Prechod do PID kúrenia.");
     casNahrievania = casPotvrdeniaPlamena - startNahrievania;
@@ -620,7 +652,7 @@ void fazaNahrievania() {
   if (!plamenPotvrdeny && millis() - startNahrievania > 180000) {
     chybaSystemu = true;
     popisChyby = "Neúspešný štart bufíka!";
-    digitalWrite(PWM_ZHAVENIE, LOW);
+    ledcWrite(ZHAVIC_PWM_CH, 0);
     digitalWrite(PWM_CERPADLO, LOW);
     Serial.println("❌ Timeout: štart bufíka sa nepodaril.");
     init = false;
@@ -761,7 +793,9 @@ void fazaKurenia() {
     }
     if (upravene) {
       pid.SetTunings(Kp, Ki, Kd);
+      pidVent.SetTunings(Kp, Ki, Kd);
       Serial.printf("⚡ Dynamická úprava PID: Kp=%.3f Ki=%.3f Kd=%.3f\n", Kp, Ki, Kd);
+      savePIDParams();
     }
     odchylkaSum = 0; odchylkaCnt = 0;
     spotrebaSum = 0; spotrebaCnt = 0;
@@ -810,7 +844,7 @@ void fazaKurenia() {
   pid.Compute();
 
   // --- PID pre ventilátor (nové) ---
-  pidVentInput = tBufik; // alebo neskôr EGT, ak pridáš MAX31855
+  pidVentInput = tBufik; // alebo neskôr EGT z MAX6675
   pidVentSetpoint = cieloveTeploty[urovenKurenia - 1];
   pidVent.Compute();
 
@@ -865,9 +899,9 @@ void fazaChladenia() {
 
   // Žhavenie zapni prvých 60 sekúnd chladenia, potom vypni
   if (millis() - chladenieZacalo < 60000) {
-    digitalWrite(PWM_ZHAVENIE, HIGH); // aktívne LOW = žhavenie ON
+    ledcWrite(ZHAVIC_PWM_CH, ZHAVIC_MAX_DUTY); // žhavenie ON
   } else {
-    digitalWrite(PWM_ZHAVENIE, LOW);  // žhavenie OFF
+    ledcWrite(ZHAVIC_PWM_CH, 0);  // žhavenie OFF
   }
 
   // Ventilátor vypni až keď teplota klesne pod 85 °C
@@ -919,21 +953,21 @@ void kontrolaPlamena() {
         Serial.printf("🔄 Automaticky zapinam spiralu, pokus %d/3\n", pocetReStartov);
         popisChyby = "Automatický pokus o zapálenie";
 
-        digitalWrite(PWM_ZHAVENIE, HIGH); // žhavenie ON
+        ledcWrite(ZHAVIC_PWM_CH, 255); // žhavenie ON na plný výkon
         delay(1000); // nech sa žhavenie naštartuje
 
         float prudZh = merajPrud();
         if (prudZh < 1.0) {
           chybaSystemu = true;
           popisChyby = "Chyba žhavenia pri reštarte plameňa!";
-          digitalWrite(PWM_ZHAVENIE, LOW);
+          ledcWrite(ZHAVIC_PWM_CH, 0);
           emergencyShutdown();
           return;
         }
 
         // čerpadlo NEVYPÍNAJ! (ani ventilátor)
         delay(9000); // zvyšných 9s žhavenia (spolu 10s)
-        digitalWrite(PWM_ZHAVENIE, LOW);  // žhavenie OFF
+        ledcWrite(ZHAVIC_PWM_CH, 0);  // žhavenie OFF
 
         casBezNarastu = 0;
         poslednaTeplota = tBufik;
@@ -969,7 +1003,13 @@ void testScanWiFi() {
 void signalError(int code) {
   Serial.print("Chyba: ");
   Serial.println(code);
-  // tu môžeš neskôr doplniť LED/buzzer
+  digitalWrite(LOCKOUT_LED, HIGH);
+  ledcWrite(1, 128);
+}
+
+void clearErrorSignal() {
+  digitalWrite(LOCKOUT_LED, LOW);
+  ledcWrite(1, 0);
 }
 
 void enterLockout(int code, const String& message) {
@@ -980,12 +1020,32 @@ void enterLockout(int code, const String& message) {
   signalError(code);
 }
 
+void handleLockoutReset() {
+  static unsigned long startPress = 0;
+  if (stavZablokovany && aktualnaFaza == FAZA_LOCKOUT) {
+    if (digitalRead(BTN_OK) == LOW) {
+      if (startPress == 0) startPress = millis();
+      if (millis() - startPress > 3000) {
+        stavZablokovany = false;
+        aktualnaFaza = FAZA_NEZAPNUTE;
+        kurenieAktivne = false;
+        clearErrorSignal();
+        tft.fillScreen(TFT_BLACK);
+        drawIndexScreen();
+        startPress = 0;
+      }
+    } else {
+      startPress = 0;
+    }
+  }
+}
+
 //==================================================================================================================== Emergency Shutdown ====================================================
 void emergencyShutdown() {
   esp_task_wdt_delete(NULL);  // deaktivuj watchdog
 
   // Vypni žhavenie a čerpadlo – ventilátor ostáva bežať v emergencyChladenie!
-  digitalWrite(PWM_ZHAVENIE, LOW);
+  ledcWrite(ZHAVIC_PWM_CH, 0);
   digitalWrite(PWM_CERPADLO, LOW);
 
   // Prejdi do FAZA_EMERGENCY_CHLADENIE
@@ -1006,7 +1066,7 @@ void emergencyChladenie() {
   const int ventPWM = 200; // alebo 255
 
   ledcWrite(VENT_PWM_CH, ventPWM);
-  digitalWrite(PWM_ZHAVENIE, LOW);
+  ledcWrite(ZHAVIC_PWM_CH, 0);
   digitalWrite(PWM_CERPADLO, LOW);
 
   if (millis() - poslednyRefresh > 500) {
@@ -1042,14 +1102,13 @@ void emergencyChladenie() {
       kurenieAktivne = false;
       // nechaj obrazovku s chybou, kým nepríde manuálny reset
     } else {
-      // pôvodné správanie
       aktualnaFaza = FAZA_NEZAPNUTE;
       kurenieAktivne = false;
+      clearErrorSignal();
       tft.fillScreen(TFT_BLACK);
       drawIndexScreen();
       chybaSystemu = false;
       popisChyby = "";
-
     }
   }
 }
@@ -1129,6 +1188,7 @@ void citajCidla() {
   float novaHAHT = bme.readHumidity();     // RH (vlhkosť)
   float novaTlak = bme.readPressure() / 100.0; // tlak v hPa
   float novaTBufik = citajNTCTeplotu(PIN_NTC);     // C Buf NTC
+  double novaTEGT = citajEGT();                   // EGT
 
   float prud = merajPrud();
   float napatie = merajNapetie();
@@ -1144,9 +1204,11 @@ void citajCidla() {
   if (!isnan(novaTBufik) && novaTBufik > -40.0 && novaTBufik < 500.0) {
     tBufik = novaTBufik;
   } else {
-    // Serial.print("⚠️ Ignorujem nerealnu hodnotu C Buf: ");
     Serial.println(novaTBufik);
-    // nechaj starú hodnotu tBufik
+  }
+
+  if (!isnan(novaTEGT) && novaTEGT > -40.0 && novaTEGT < 1200.0) {
+    tEGT = novaTEGT;
   }
 
 
@@ -1491,8 +1553,8 @@ void drawInfoScreen() {
   tft.print("C");
 
   tft.setCursor(10, 90);
-  tft.print("Teplota NTC:      ");
-  tft.print(tNTC, 1);
+  tft.print("Teplota EGT:      ");
+  tft.print(tEGT, 1);
   tft.print("C");
 
 
@@ -2076,6 +2138,13 @@ void setup() {
   pinMode(PWM_CERPADLO, OUTPUT);
   pinMode(BTN_UP, INPUT_PULLUP);
   pinMode(BTN_OK, INPUT_PULLUP);
+  pinMode(LOCKOUT_LED, OUTPUT);
+  ledcSetup(1, 2000, 8);
+  ledcAttachPin(LOCKOUT_BUZZER, 1);
+  digitalWrite(LOCKOUT_LED, LOW);
+
+  ledcSetup(ZHAVIC_PWM_CH, 8000, 8);
+  ledcAttachPin(PWM_ZHAVENIE, ZHAVIC_PWM_CH);
 
   ledcSetup(VENT_PWM_CH, 10000, 8);
   ledcAttachPin(PWM_VENTILATOR, VENT_PWM_CH);
@@ -2098,7 +2167,7 @@ void setup() {
 
   aktualnaFaza = FAZA_NEZAPNUTE;
   kurenieAktivne = false;
-  digitalWrite(PWM_ZHAVENIE, LOW);
+  ledcWrite(ZHAVIC_PWM_CH, 0);
   digitalWrite(PWM_CERPADLO, LOW);
   ledcWrite(VENT_PWM_CH, 0);
   drawIndexScreen();
@@ -2117,6 +2186,7 @@ void setup() {
     Serial.println("❌ SPIFFS sa nepodarilo spustiť");
   } else {
     Serial.println("✅ SPIFFS inicializované");
+    loadPIDParams();
   }
   nacitajLogyZoSPIFFS();
   if (zaznamy.size() > 0) {
@@ -2141,6 +2211,7 @@ void setup() {
 
 
 void loop()  {
+  handleLockoutReset();
 
   static int poslednaFaza = -1;
   static bool posledneKurenieAktivne = false;
@@ -2158,11 +2229,14 @@ void loop()  {
   }
 
   if (millis() - lastTeplotaUpdate > 2000) { // Zvýšený interval na 2000 ms
-    citajCidla();
-    updateSpotrebaStats();
+      citajCidla();
+      updateSpotrebaStats();
 
-    tNTC = citajNTCTeplotu(13);
-    kontrolaPlamena();
+      if (tEGT > EGT_MAX) {
+        popisChyby = "EGT presiahla limit";
+        emergencyShutdown();
+      }
+      kontrolaPlamena();
     plynulyPrechodVentilatora();
 
     // Každých 5 sekúnd vypočíta aktuálnu spotrebu
@@ -2206,7 +2280,7 @@ void loop()  {
   // A1: okamžitá reakcia na prehriatie – pred spracovaním stavov
   if (tBufik >= TEPLOTA_MAX && aktualnaFaza != FAZA_EMERGENCY_CHLADENIE) {
     // okamžite vypni žhavenie a čerpadlo, nechaj bežať ventilátor
-    digitalWrite(PWM_ZHAVENIE, LOW);
+    ledcWrite(ZHAVIC_PWM_CH, 0);
     digitalWrite(PWM_CERPADLO, LOW);
     ledcWrite(VENT_PWM_CH, MIN_VENT_OTACKY);   // alebo vyššie, podľa tvojho minima
     emergencyStartMs = millis();
@@ -2219,7 +2293,7 @@ void loop()  {
           // A3: ak je blokované, nič nenaštartuj
           ledcWrite(VENT_PWM_CH, 0);
           digitalWrite(PWM_CERPADLO, LOW);
-          digitalWrite(PWM_ZHAVENIE, LOW);
+          ledcWrite(ZHAVIC_PWM_CH, 0);
           break;
         }
 
@@ -2238,7 +2312,7 @@ void loop()  {
         if (stavZablokovany) {
           ledcWrite(VENT_PWM_CH, 0);
           digitalWrite(PWM_CERPADLO, LOW);
-          digitalWrite(PWM_ZHAVENIE, LOW);
+          ledcWrite(ZHAVIC_PWM_CH, 0);
           break;
         }
 
@@ -2253,7 +2327,7 @@ void loop()  {
             if (millis() - plamenNaposledy > PLAMEN_TIMEOUT_MS) {
               // vypni horák – čerpadlo a žhavenie
               digitalWrite(PWM_CERPADLO, LOW);
-              digitalWrite(PWM_ZHAVENIE, LOW);
+              ledcWrite(ZHAVIC_PWM_CH, 0);
 
               if (restartPokusy < MAX_RESTART_POKUSY) {
                 restartPokusy++;
@@ -2287,7 +2361,7 @@ void loop()  {
         // A1: nechaj ventilátor bežať, kým teplota neklesne alebo neuplynie minimálny čas
         ledcWrite(VENT_PWM_CH, MIN_VENT_OTACKY);
         digitalWrite(PWM_CERPADLO, LOW);
-        digitalWrite(PWM_ZHAVENIE, LOW);
+        ledcWrite(ZHAVIC_PWM_CH, 0);
 
         bool casUplynul = (millis() - emergencyStartMs) >= DOCHLADENIE_MS;
         bool teplotaOK   = tBufik <= TEPLOTA_BEZPECNA;
@@ -2305,7 +2379,7 @@ void loop()  {
     default: {
         ledcWrite(VENT_PWM_CH, 0);
         digitalWrite(PWM_CERPADLO, LOW);
-        digitalWrite(PWM_ZHAVENIE, LOW);
+        ledcWrite(ZHAVIC_PWM_CH, 0);
         break;
       }
   }
