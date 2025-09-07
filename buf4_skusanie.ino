@@ -1,3 +1,5 @@
+struct PlynulyPrechod;  // forward declaration for Arduino's auto-generated prototypes
+
 #include <Wire.h>
 #include <TFT_eSPI.h>
 #include <Adafruit_BME280.h>
