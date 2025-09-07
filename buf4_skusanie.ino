@@ -27,7 +27,6 @@ void emergencyShutdown();
 #define MAX_RESTART_POKUSY 3           // A2: max. auto-reštarty pri zhasnutí plameňa
 #define PLAMEN_TIMEOUT_MS 5000UL       // A2: timeout pre vyhodnotenie zhasnutia plameňa
 #define SPOTREBA_NA_PULZ 0.000025
-#define EMERGENCY_SHUTDOWN_TEMP 230.0
 #define PID_KP 1.0   // alebo aj 0.7
 #define PID_KI 0.1   // veľmi opatrne s I
 #define PID_KD 2.0   // ak chceš tlmenie (alebo 0.5)
@@ -189,7 +188,7 @@ PlynulyPrechod prechodCerpadlo = {0, 0, 0, false};
 
 
 
-int vypocitajPlynuluHodnotu(PlynulyPrechod prechod) {
+int vypocitajPlynuluHodnotu(const PlynulyPrechod &prechod) {
   if (!prechod.aktivny) return prechod.cielovaHodnota;
 
   unsigned long elapsed = millis() - prechod.casZaciatku;
@@ -1203,7 +1202,7 @@ void regulatePump() {
     return;
   }
 
-  int interval = map(tBufik, TEPLOTA_RYCHLE_START, EMERGENCY_SHUTDOWN_TEMP, 300, 3000);
+  int interval = map((long)tBufik, (long)TEPLOTA_RYCHLE_START, (long)TEPLOTA_MAX, 300, 3000);
   interval = constrain(interval, 300, 3000);
 
   if (millis() - lastPumpPulse > interval) {
@@ -2265,7 +2264,7 @@ void loop()  {
     posledneKurenieAktivne = kurenieAktivne;
   }
 
-  if (tBufik >= EMERGENCY_SHUTDOWN_TEMP) {
+  if (tBufik >= TEPLOTA_MAX) {
     emergencyShutdown();
   }
 
